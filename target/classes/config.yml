@@ -1,0 +1,12 @@
+worlds:
+  world:
+    spawn:
+      timer: 100
+      p1:
+        x: 0
+        y: 0
+        z: 0
+      p2:
+        x: 2
+        y: 2
+        z: 2
