@@ -1,6 +1,7 @@
 package org.forg.mayhemspawn.integration;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.forg.mayhemspawn.actions.MayhemActions;
 import org.forg.mayhemspawn.config.MayhemConfig;
 
 public final class MayhemPlugin extends JavaPlugin {
@@ -9,16 +10,13 @@ public final class MayhemPlugin extends JavaPlugin {
         getLogger().info("Plugin Launching");
         saveDefaultConfig();
 
-        MayhemConfig.getInstance(this, getConfig()).load();
+        MayhemConfig.init(this, getConfig());
+        MayhemConfig.getInstance().load();
 
-        getCommand("mspawn").setExecutor(new MayhemCommandExecutor());
-        getServer().getPluginManager().registerEvents(new MayhemEventListener(),this);
-//        CuboidRegion region = mayhemConfig.getRegion("world", "spawn");
-//        Map<String, CuboidRegion> regions = mayhemConfig.getRegionsForWorldName("world");
-//        mayhemConfig.addRegionForWorld("nether","my-region",new CuboidRegion(
-//                new BlockVector3(123,10,123),
-//                new BlockVector3(-123,0,-123)
-//        ));
+        MayhemActions actions = new MayhemActions(this);
+        getServer().getPluginManager().registerEvents(new MayhemButtonListener(actions),this);
+
+        new MayhemCommands(this);
 
         getLogger().info("Plugin initialized and ready to go");
     }
@@ -26,8 +24,5 @@ public final class MayhemPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
 
-    }
-    public static JavaPlugin getInstance() {
-        return getPlugin(MayhemPlugin.class);
     }
 }

@@ -6,13 +6,11 @@ import org.bukkit.World;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.forg.mayhemspawn.MayhemArena.MayhemArena;
-import org.forg.mayhemspawn.integration.MayhemArenaHooked;
-import org.forg.mayhemspawn.integration.MayhemPlugin;
+import org.forg.mayhemspawn.MayhemArena.RewardedTimedMayhemArena;
+import org.forg.mayhemspawn.MayhemArena.RewardedTimedMayhemArenaBuilder;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MayhemConfig {
@@ -21,85 +19,127 @@ public class MayhemConfig {
         this.plugin = plugin;
         this.config = config;
     }
+
+    public static void init(JavaPlugin plugin, Configuration config) {
+        instance = new MayhemConfig(plugin, config);
+    }
     private static MayhemConfig instance;
-    public static MayhemConfig getInstance(JavaPlugin plugin, Configuration config) {
-        if (instance == null) instance = new MayhemConfig(plugin, config);
+    public static MayhemConfig getInstance() {
         return instance;
     }
-    private static final Map<String, Map<String, MayhemArena>> worlds = new LinkedHashMap<>();
+    private static final Map<String, Map<String, RewardedTimedMayhemArena>> worlds = new LinkedHashMap<>();
 
     public void load() {
         worlds.clear();
-        ConfigurationSection worldsSection = config.getConfigurationSection("worlds");
-        if (worldsSection == null) return;
 
+        ConfigurationSection worldsSection = config.getConfigurationSection("worlds");
+
+        assert worldsSection != null;
         for (String worldName : worldsSection.getKeys(false)) {
             ConfigurationSection worldSection = worldsSection.getConfigurationSection(worldName);
-            if (worldSection == null) continue;
-            Map<String, MayhemArena> regionMap = new LinkedHashMap<>();
+            Map<String, RewardedTimedMayhemArena> regionMap = new LinkedHashMap<>();
 
+            assert worldSection != null;
             for (String regionName : worldSection.getKeys(false)) {
                 ConfigurationSection regionSection = worldSection.getConfigurationSection(regionName);
-                if (regionSection == null) continue;
 
-                ConfigurationSection section1 = regionSection.getConfigurationSection("p1");
-                ConfigurationSection section2 = regionSection.getConfigurationSection("p2");
-                int timer = regionSection.getInt("timer");
+                try{
+                    assert regionSection != null;
+                    ConfigurationSection section1 = regionSection.getConfigurationSection("p1");
+                    ConfigurationSection section2 = regionSection.getConfigurationSection("p2");
+                    int timer = regionSection.getInt("timer");
 
-                assert section1 != null;
-                assert section2 != null;
+                    assert section1 != null;
+                    assert section2 != null;
+                    CuboidRegion region = new CuboidRegion(
+                            new BlockVector3(section1.getInt("x"), section1.getInt("y"), section1.getInt("z")),
+                            new BlockVector3(section2.getInt("x"), section2.getInt("y"), section2.getInt("z"))
+                    );
 
-                CuboidRegion region = new CuboidRegion(
-                        new BlockVector3(section1.getInt("x"), section1.getInt("y"), section1.getInt("z")),
-                        new BlockVector3(section2.getInt("x"), section2.getInt("y"), section2.getInt("z"))
-                        );
+                    int reward = regionSection.getInt("reward");
+                    ConfigurationSection activatorSection =
+                            regionSection.getConfigurationSection("activator");
 
-                World world = MayhemPlugin.getInstance().getServer().getWorld(worldName);
-                regionMap.put(
-                        regionName,
-                        MayhemArenaHooked
-                                .createWithHooks(world, regionName,region,timer)
-                );
+                    assert activatorSection != null;
+                    BlockVector3 activatorLocation = new BlockVector3(
+                            activatorSection.getInt("x"),
+                            activatorSection.getInt("y"),
+                            activatorSection.getInt("z")
+                    );
+
+                    World world = plugin.getServer().getWorld(worldName);
+                    regionMap.put(
+                            regionName,
+                            new RewardedTimedMayhemArenaBuilder(plugin,world,regionName)
+                                .setActivator(activatorLocation)
+                                .setRegion(region)
+                                .setRewardMoney(reward)
+                                .setTimerTicks(timer)
+                                .build()
+                    );
+                } catch (NullPointerException ex) {
+                    plugin.getLogger().severe(
+                            "Конфиг для региона " + regionName + " не валидный");
+                }
+
             }
 
             worlds.put(worldName, regionMap);
         }
     }
-    public void addRegionForWorld(World world, String regionName, MayhemArena arena) {
+    public void addRegion(RewardedTimedMayhemArena arena) {
+        String regionName = arena.arenaName;
+        World world = arena.activeWorld;
         String lowercased = regionName.toLowerCase();
         worlds.computeIfAbsent(world.getName(), k -> new LinkedHashMap<>()).put(lowercased, arena);
         saveRegionsToConfig();
     }
 
-    public Map<String, MayhemArena> getRegionsForWorldName(String worldName) {
+    public Map<String, RewardedTimedMayhemArena> getRegionsForWorldName(String worldName) {
         return worlds.getOrDefault(worldName, new LinkedHashMap<>());
     }
     @Nullable
-    public MayhemArena getRegion(String worldName, String regionName) {
+    public RewardedTimedMayhemArena getRegion(String worldName, String regionName) {
         String lowercased = regionName.toLowerCase();
-        Map<String, MayhemArena> worldRegions = worlds.getOrDefault(worldName, new LinkedHashMap<>());
+        Map<String, RewardedTimedMayhemArena> worldRegions = worlds.getOrDefault(worldName, new LinkedHashMap<>());
         if (worldRegions.containsKey(lowercased)) {
             return worldRegions.get(lowercased);
         }
         return null;
     }
 
+    @Nullable
+    public RewardedTimedMayhemArena getByActivatorLocation(String worldName, BlockVector3 location) {
+        Map<String, RewardedTimedMayhemArena> worldRegions = worlds.getOrDefault(worldName, new LinkedHashMap<>());
+        for (RewardedTimedMayhemArena arena: worldRegions.values()) {
+            if (location.equals(arena.activatorLocation)) {
+                return arena;
+            }
+        }
+        return null;
+    }
+
     private void saveRegionsToConfig() {
         ConfigurationSection worldsSection = config.createSection("worlds");
-        for (Map.Entry<String, Map<String, MayhemArena>> worldEntry : worlds.entrySet()) {
+        for (Map.Entry<String, Map<String, RewardedTimedMayhemArena>> worldEntry : worlds.entrySet()) {
 
             String worldName = worldEntry.getKey();
             ConfigurationSection worldSection = worldsSection.createSection(worldName);
 
-            for (Map.Entry<String, MayhemArena> regionEntry : worldEntry.getValue().entrySet()) {
+            for (Map.Entry<String, RewardedTimedMayhemArena> regionEntry : worldEntry.getValue().entrySet()) {
                 String regionName = regionEntry.getKey();
-                MayhemArena arena = regionEntry.getValue();
+                RewardedTimedMayhemArena arena = regionEntry.getValue();
                 ConfigurationSection regionSection = worldSection.createSection(regionName);
+
+                regionSection.set("timer", arena.timerTicks);
+                regionSection.set("reward", arena.reward);
+                ConfigurationSection activatorSection = regionSection.createSection("activator");
+                activatorSection.set("x", arena.activatorLocation.x());
+                activatorSection.set("y", arena.activatorLocation.y());
+                activatorSection.set("z", arena.activatorLocation.z());
 
                 BlockVector3 v1 = arena.region.getPos1();
                 BlockVector3 v2 = arena.region.getPos2();
-
-                regionSection.set("timer", arena.getTimerSeconds());
 
                 ConfigurationSection pointOneSection = regionSection.createSection("p1");
                 pointOneSection.set("x", v1.x());

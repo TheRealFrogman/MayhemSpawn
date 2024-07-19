@@ -2,6 +2,11 @@ worlds:
   world:
     spawn:
       timer: 100
+      reward: 500
+      activator:
+        x: 1
+        y: 1
+        z: 1
       p1:
         x: 0
         y: 0

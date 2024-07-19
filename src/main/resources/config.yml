@@ -3,7 +3,7 @@ worlds:
     spawn:
       timer: 100
       reward: 500
-      button:
+      activator:
         x: 1
         y: 1
         z: 1
