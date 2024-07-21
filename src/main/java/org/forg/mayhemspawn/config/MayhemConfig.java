@@ -2,6 +2,7 @@ package org.forg.mayhemspawn.config;
 
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.bukkit.World;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -87,7 +88,8 @@ public class MayhemConfig {
             worlds.put(worldName, regionMap);
         }
     }
-    public void addRegion(RewardedTimedMayhemArena arena) {
+
+    public void addRegion(@NotNull RewardedTimedMayhemArena arena) {
         String regionName = arena.arenaName;
         World world = arena.activeWorld;
         String lowercased = regionName.toLowerCase();
@@ -95,11 +97,11 @@ public class MayhemConfig {
         saveRegionsToConfig();
     }
 
-    public Map<String, RewardedTimedMayhemArena> getRegionsForWorldName(String worldName) {
+    public Map<String, RewardedTimedMayhemArena> getRegionsForWorldName(@NotNull String worldName) {
         return worlds.getOrDefault(worldName, new LinkedHashMap<>());
     }
     @Nullable
-    public RewardedTimedMayhemArena getRegion(String worldName, String regionName) {
+    public RewardedTimedMayhemArena getRegion(@NotNull String worldName, @NotNull String regionName) {
         String lowercased = regionName.toLowerCase();
         Map<String, RewardedTimedMayhemArena> worldRegions = worlds.getOrDefault(worldName, new LinkedHashMap<>());
         if (worldRegions.containsKey(lowercased)) {
@@ -109,7 +111,7 @@ public class MayhemConfig {
     }
 
     @Nullable
-    public RewardedTimedMayhemArena getByActivatorLocation(String worldName, BlockVector3 location) {
+    public RewardedTimedMayhemArena getByActivatorLocation(@NotNull String worldName, @NotNull BlockVector3 location) {
         Map<String, RewardedTimedMayhemArena> worldRegions = worlds.getOrDefault(worldName, new LinkedHashMap<>());
         for (RewardedTimedMayhemArena arena: worldRegions.values()) {
             if (location.equals(arena.activatorLocation)) {

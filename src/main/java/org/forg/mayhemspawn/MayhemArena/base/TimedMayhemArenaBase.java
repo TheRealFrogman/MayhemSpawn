@@ -39,7 +39,6 @@ public abstract class TimedMayhemArenaBase extends MayhemArena {
         return activePlayers.size() >= 2;
     }
     public void startArenaCountdown(Player starter) {
-        super.startArena();
         activePlayers = activeWorld.getPlayers().stream()
                 .filter(Objects::nonNull)
                 .filter(player -> {
@@ -55,6 +54,8 @@ public abstract class TimedMayhemArenaBase extends MayhemArena {
             return;
         }
 
+        super.startArena();
+        starter.sendMessage("Вы начали арену");
         new BukkitRunnable() {
             @Override public void run() {
                 arenaOnTickTemplate(this::cancel);
@@ -80,6 +81,7 @@ public abstract class TimedMayhemArenaBase extends MayhemArena {
             remainedTicks -= 20;
         } else {
             scheduledCancelController.cancel();
+            remainedTicks = timerTicks; // это сбрасывает таймер, если не сбросить, то в первый раз сработает как надо, а потом будет моментально взрываться
             finishArena();
             Set<Player> winners = activePlayers.stream()
                     .filter(Objects::nonNull)
