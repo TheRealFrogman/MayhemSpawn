@@ -9,20 +9,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b299749-4cd1-4bb6-915a-347d958a8d05" name="Changes" comment="fix bugs, add bad code">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/MayhemSpawn_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/MayhemSpawn_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/MayhemArenaBuilderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/MayhemArenaBuilderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/RewardedTimedMayhemArena.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/RewardedTimedMayhemArena.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/RewardedTimedMayhemArenaBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/RewardedTimedMayhemArenaBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/base/MayhemArena.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/base/MayhemArena.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/base/TimedMayhemArenaBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/base/TimedMayhemArenaBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/actions/IMayhemActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/actions/IMayhemActions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/actions/MayhemActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/actions/MayhemActions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/integration/MayhemButtonListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/integration/MayhemButtonListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/integration/MayhemCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/integration/MayhemCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/integration/MayhemPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/integration/MayhemPlugin.java" afterDir="false" />
+    <list default="true" id="7b299749-4cd1-4bb6-915a-347d958a8d05" name="Changes" comment="Add help. Go for transaction pattern where i throw to terminate the call stack">
+      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/MayhemArena/MayhemArenaBuilderRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/MayhemArena/MayhemArenaBuilderRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/MayhemArena/RewardedTimedMayhemArena.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/MayhemArena/RewardedTimedMayhemArena.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/MayhemArena/RewardedTimedMayhemArenaBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/MayhemArena/RewardedTimedMayhemArenaBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/MayhemArena/base/MayhemArena.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/MayhemArena/base/MayhemArena.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/MayhemArena/base/TimedMayhemArenaBase$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/MayhemArena/base/TimedMayhemArenaBase$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/MayhemArena/base/TimedMayhemArenaBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/MayhemArena/base/TimedMayhemArenaBase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/actions/IMayhemActions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/actions/IMayhemActions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/actions/MayhemActions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/actions/MayhemActions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/actions/MayhemPermissions.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/integration/MayhemButtonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/integration/MayhemButtonListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/integration/MayhemCommands.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/integration/MayhemCommands.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/integration/MayhemPlugin.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/integration/MayhemPlugin.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +131,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721571339848</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add help. Go for transaction pattern where i throw to terminate the call stack">
+      <option name="closed" value="true" />
+      <created>1721857285032</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1721857285032</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -150,7 +157,8 @@
     <MESSAGE value="initial" />
     <MESSAGE value="final i guess" />
     <MESSAGE value="fix bugs, add bad code" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bugs, add bad code" />
+    <MESSAGE value="Add help. Go for transaction pattern where i throw to terminate the call stack" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add help. Go for transaction pattern where i throw to terminate the call stack" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
