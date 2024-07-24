@@ -64,6 +64,7 @@ public class RewardedTimedMayhemArenaBuilder {
     }
 
     public RewardedTimedMayhemArena build() {
+        final int MIN_PLAYERS_DEFAULT = 2;
         if(canBuild())
             return new RewardedTimedMayhemArena(
                 plugin,
@@ -72,7 +73,8 @@ public class RewardedTimedMayhemArenaBuilder {
                 region,
                 activatorLocation,
                 timerTicks,
-                reward
+                reward,
+                MIN_PLAYERS_DEFAULT
             );
         else throw new IllegalStateException("Can't be null");
     }

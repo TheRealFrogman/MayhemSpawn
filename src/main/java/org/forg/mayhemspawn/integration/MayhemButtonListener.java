@@ -21,11 +21,16 @@ public class MayhemButtonListener implements Listener {
         if(block == null) return;
         if(Tag.BUTTONS.isTagged(block.getBlockData().getMaterial())) {
             if(player.hasPermission("mspawn.activate"))
-                actions.startArenaByButton(e.getPlayer(), new BlockVector3(
-                        block.getLocation().getBlockX(),
-                        block.getLocation().getBlockY(),
-                        block.getLocation().getBlockZ()
-                ));
+                try{
+                    actions.startArenaByButton(player.getWorld().getName(),new BlockVector3(
+                            block.getLocation().getBlockX(),
+                            block.getLocation().getBlockY(),
+                            block.getLocation().getBlockZ()
+                    ));
+                    player.sendMessage("Вы начали арену");
+                } catch (Exception err) {
+                    player.sendMessage(err.getMessage());
+                }
         }
     }
 }

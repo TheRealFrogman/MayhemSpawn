@@ -5,17 +5,18 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class MayhemArenaBuilderRepository {
-    private static final Map<Player, RewardedTimedMayhemArenaBuilder> builders = new HashMap<>();
-    public void add(Player p, RewardedTimedMayhemArenaBuilder b) {
-        builders.put(p, b);
+    private static final Map<UUID, RewardedTimedMayhemArenaBuilder> builders = new HashMap<>();
+    public void add(UUID playerUUID, RewardedTimedMayhemArenaBuilder b) {
+        builders.put(playerUUID, b);
     }
-    public void remove(Player p) {
-        builders.remove(p);
+    public void remove(UUID playerUUID) {
+        builders.remove(playerUUID);
     }
     @Nullable
-    public RewardedTimedMayhemArenaBuilder findByPlayer(Player p) {
-        return builders.get(p);
+    public RewardedTimedMayhemArenaBuilder findByPlayer(UUID playerUUID) {
+        return builders.get(playerUUID);
     }
 }

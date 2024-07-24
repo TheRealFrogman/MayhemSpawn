@@ -5,15 +5,16 @@ import com.sk89q.worldedit.regions.CuboidRegion;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-public interface IMayhemActions {
-    void createBaseArena(Player p, World world, String arenaName);
-    void confirmArena(Player p);
-    void selectArena(Player p, String worldName, String arenaName);
-    void setRewardMoney(Player p, int rewardMoney);
-    void setTimer(Player p, int timer);
-    void setRegion(Player p, CuboidRegion region);
-    void startArenaByButton(Player p, BlockVector3 activatorLocation);
-    void startArenaByCommand(Player p, String arenaName);
-    void buttonset(Player p, BlockVector3 location);
+import java.util.UUID;
 
+public interface IMayhemActions {
+    void createBaseArena(UUID playerUUID, World world, String arenaName) throws Exception;
+    void confirmArena(UUID playerUUID) throws Exception;
+    void selectArena(UUID playerUUID, String worldName, String arenaName) throws Exception;
+    void setRewardMoney(UUID playerUUID, int rewardMoney) throws Exception;
+    void setTimer(UUID playerUUID, int timer) throws Exception;
+    void setRegion(UUID playerUUID, CuboidRegion region) throws Exception;
+    void startArenaByButton(String worldName, BlockVector3 activatorLocation) throws Exception;
+    void startArenaByCommand(String worldName, String arenaName) throws Exception;
+    void buttonset(UUID playerUUID, BlockVector3 location) throws Exception;
 }

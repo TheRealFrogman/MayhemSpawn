@@ -23,9 +23,10 @@ public class RewardedTimedMayhemArena extends TimedMayhemArenaBase {
             CuboidRegion region,
             BlockVector3 activatorLocation,
             int timerTicks,
-            int reward
+            int reward,
+            int minPlayers
     ) {
-        super(plugin, activeWorld, arenaName, region, activatorLocation, timerTicks);
+        super(plugin, activeWorld, arenaName, region, activatorLocation, timerTicks, minPlayers);
         this.reward = reward;
         RegisteredServiceProvider<Economy> economyProvider = plugin
                 .getServer()
@@ -50,4 +51,8 @@ public class RewardedTimedMayhemArena extends TimedMayhemArenaBase {
             player.damage(100);
         }
     }
+    public void start() throws Exception {
+        this.startArena();
+    }
+
 }

@@ -10,6 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public abstract class TimedMayhemArenaBase extends MayhemArena {
@@ -17,28 +18,28 @@ public abstract class TimedMayhemArenaBase extends MayhemArena {
     public int interval = TICKS_IN_SECONDS;
 //    public int getTimerSeconds() { return this.timerTicks / TICKS_IN_SECONDS;}
     public int timerTicks;
+    private int remainedTicks;
+    private int countdownDelay;
     public TimedMayhemArenaBase(
             JavaPlugin plugin,
             World activeWorld,
             String arenaName,
             CuboidRegion region,
             BlockVector3 activatorLocation,
-            int timerTicks
+            int timerTicks,
+            int minPlayers
     ) {
-        super(plugin, activeWorld, arenaName, region, activatorLocation);
+        super(plugin, activeWorld, arenaName, region, activatorLocation,minPlayers);
         this.timerTicks = timerTicks;
         remainedTicks = timerTicks;
     }
-    private int remainedTicks;
-    private int countdownDelay;
     public void setCountdownDelay(int delay) {
         if (delay < 0) throw new IllegalArgumentException("can't be negative");
         this.countdownDelay = delay;
     }
-    private boolean isEnoughPlayers() {
-        return activePlayers.size() >= 2;
-    }
-    public void startArenaCountdown(Player starter) {
+
+    @Override
+    protected void beforeStart() throws Exception {
         activePlayers = activeWorld.getPlayers().stream()
                 .filter(Objects::nonNull)
                 .filter(player -> {
@@ -48,28 +49,15 @@ public abstract class TimedMayhemArenaBase extends MayhemArena {
                     return playerInRegion;
                 })
                 .collect(Collectors.toSet());
-
-        if(!isEnoughPlayers()) {
-            starter.sendMessage("Игроков не может быть меньше 2");
-            return;
-        }
-
-        super.startArena();
-        starter.sendMessage("Вы начали арену");
+    }
+    @Override
+    protected void afterStart() {
         new BukkitRunnable() {
             @Override public void run() {
                 arenaOnTickTemplate(this::cancel);
             }
         }.runTaskTimer(plugin, countdownDelay, interval);
     }
-    private boolean isPlayerInRegion(Player player, CuboidRegion region) {
-        Location pl = player.getLocation();
-        BlockVector3 vector = new BlockVector3(pl.getBlockX(), pl.getBlockY(), pl.getBlockZ());
-        return region.contains(vector);
-    }
-
-    protected Set<Player> activePlayers;
-
     private void arenaOnTickTemplate(
             CancelController scheduledCancelController
     ) {
@@ -83,11 +71,11 @@ public abstract class TimedMayhemArenaBase extends MayhemArena {
             scheduledCancelController.cancel();
             remainedTicks = timerTicks; // это сбрасывает таймер, если не сбросить, то в первый раз сработает как надо, а потом будет моментально взрываться
             finishArena();
+
             Set<Player> winners = activePlayers.stream()
                     .filter(Objects::nonNull)
                     .filter(player -> !isPlayerInRegion(player,region))
                     .collect(Collectors.toSet());
-
             activePlayers.stream()
                     .filter(Objects::nonNull)
                     .forEach(player -> onEachPlayerEnd(player, winners.contains(player)));

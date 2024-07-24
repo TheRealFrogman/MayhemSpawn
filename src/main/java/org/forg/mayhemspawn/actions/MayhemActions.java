@@ -10,7 +10,9 @@ import org.forg.mayhemspawn.MayhemArena.RewardedTimedMayhemArena;
 import org.forg.mayhemspawn.MayhemArena.RewardedTimedMayhemArenaBuilder;
 import org.forg.mayhemspawn.config.MayhemConfig;
 
-public class MayhemActions implements IMayhemActions {
+import java.util.UUID;
+
+public class MayhemActions  implements  IMayhemActions {
     private final MayhemArenaBuilderRepository repo = new MayhemArenaBuilderRepository();
     private final JavaPlugin plugin;
     public MayhemActions(
@@ -19,144 +21,127 @@ public class MayhemActions implements IMayhemActions {
         this.plugin = plugin;
     }
     @Override
-    public void createBaseArena(Player p, World world, String arenaName) {
+    public void createBaseArena(UUID playerUUID, World world, String arenaName) throws Exception {
         RewardedTimedMayhemArenaBuilder builder
                 = new RewardedTimedMayhemArenaBuilder(plugin, world, arenaName);
-        repo.add(p,builder);
-        p.sendMessage("Вы создали арену, теперь настройте ее");
-
+        repo.add(playerUUID, builder);
+        // p.sendMessage("Вы создали арену, теперь настройте ее");
     }
 
     @Override
-    public void confirmArena(Player p) {
-        try {
-            RewardedTimedMayhemArenaBuilder builder = repo.findByPlayer(p);
-            if(builder == null) {
-                p.sendMessage("Нет арены для подтверждения");
-                return;
-            }
-
-            if(!builder.isActivatorSet())
-                p.sendMessage("Вы не установили кнопку");
-            if(!builder.isRegionSet())
-                p.sendMessage("Вы не установили регион");
-            if(!builder.isRewardSet())
-                p.sendMessage("Вы не установили награду");
-            if(!builder.isTimerSet())
-                p.sendMessage("Вы не установили таймер");
-            if(!builder.canBuild()) return;
-
-            RewardedTimedMayhemArena arena = builder.build();
-            repo.remove(p);
-            MayhemConfig.getInstance().addRegion(arena);
-            p.sendMessage("Арена готова");
-        } catch (NullPointerException e) {
-            p.sendMessage("У вас не выбрана арена");
+    public void confirmArena(UUID playerUUID) throws Exception {
+        RewardedTimedMayhemArenaBuilder builder = repo.findByPlayer(playerUUID);
+        if (builder == null) {
+            throw new Exception("Нет арены для подтверждения");
         }
+
+        if (!builder.isActivatorSet()) {
+            throw new Exception("Вы не установили кнопку");
+        }
+        if (!builder.isRegionSet()) {
+            throw new Exception("Вы не установили регион");
+        }
+        if (!builder.isRewardSet()) {
+            throw new Exception("Вы не установили награду");
+        }
+        if (!builder.isTimerSet()) {
+            throw new Exception("Вы не установили таймер");
+        }
+        if (!builder.canBuild()) return;
+
+        RewardedTimedMayhemArena arena = builder.build();
+        repo.remove(playerUUID);
+        MayhemConfig.getInstance().addRegion(arena);
     }
 
     @Override
-    public void selectArena(Player p, String worldName, String arenaName) {
+    public void selectArena(UUID playerUUID, String worldName, String arenaName) throws Exception {
         RewardedTimedMayhemArena arena = MayhemConfig.getInstance().getRegion(worldName, arenaName);
 
-        if(arena == null) {
-            p.sendMessage("В конфиге нет такой арены");
-            return;
+        if (arena == null) {
+            throw new Exception("В конфиге нет такой арены");
         }
         repo.add(
-                p,
+                playerUUID,
                 new RewardedTimedMayhemArenaBuilder(plugin, arena.activeWorld, arena.arenaName)
                         .setActivator(arena.activatorLocation)
                         .setRegion(arena.region)
                         .setTimerTicks(arena.timerTicks)
                         .setRewardMoney(arena.reward)
         );
-            p.sendMessage("Вы успешно выбрали регион " + arenaName);
     }
     @Override
-    public void setRewardMoney(Player p, int rewardMoney) {
-        RewardedTimedMayhemArenaBuilder builder = repo.findByPlayer(p);
-        if(builder == null) {
-            p.sendMessage("У вас нет выбранного региона");
-            return;
+    public void setRewardMoney(UUID playerUUID, int rewardMoney) throws Exception {
+        RewardedTimedMayhemArenaBuilder builder = repo.findByPlayer(playerUUID);
+        if (builder == null) {
+            throw new Exception("У вас нет выбранного региона");
         }
         builder.setRewardMoney(rewardMoney);
-        p.sendMessage("Вы установили награду");
     }
 
     @Override
-    public void setTimer(Player p, int timer) {
-        RewardedTimedMayhemArenaBuilder builder = repo.findByPlayer(p);
-        if(builder == null) {
-            p.sendMessage("У вас нет выбранного региона");
-            return;
+    public void setTimer(UUID playerUUID, int timer) throws Exception {
+        RewardedTimedMayhemArenaBuilder builder = repo.findByPlayer(playerUUID);
+        if (builder == null) {
+            throw new Exception("У вас нет выбранного региона");
         }
         builder.setTimerTicks(timer);
-        p.sendMessage("Вы установили таймер");
     }
 
     @Override
-    public void setRegion(Player p, CuboidRegion region) {
-        RewardedTimedMayhemArenaBuilder builder = repo.findByPlayer(p);
-        if(builder == null) {
-            p.sendMessage("У вас нет выбранной арены");
-            return;
+    public void setRegion(UUID playerUUID, CuboidRegion region) throws Exception {
+        RewardedTimedMayhemArenaBuilder builder = repo.findByPlayer(playerUUID);
+        if (builder == null) {
+            throw new Exception("У вас нет выбранной арены");
         }
         builder.setRegion(region);
-        p.sendMessage("Вы установили регион");
     }
 
     @Override
-    public void startArenaByButton(Player p, BlockVector3 activatorLocation) {
+    public void startArenaByButton(String worldName,BlockVector3 activatorLocation) throws Exception {
         RewardedTimedMayhemArena arena = MayhemConfig
                 .getInstance()
-                .getByActivatorLocation(p.getWorld().getName(),activatorLocation);
+                .getByActivatorLocation(worldName, activatorLocation);
 
-        if(arena == null) {
-            return;
+        if (arena == null) {
+            throw new Exception("Арена не найдена");
         }
         if (!arena.region.contains(activatorLocation)) {
-            p.sendMessage("Кнопка должна быть внутри региона");
-            return;
+            throw new Exception("Кнопка должна быть внутри региона");
         }
         if (arena.isStarted()) {
-            p.sendMessage("Арена уже начата");
-            return;
+            throw new Exception("Арена уже начата");
         }
 
-        arena.startArenaCountdown(p);
+        arena.start();
     }
 
     @Override
-    public void startArenaByCommand(Player p, String arenaName) {
+    public void startArenaByCommand(String worldName, String arenaName) throws Exception {
         RewardedTimedMayhemArena arena = MayhemConfig
                 .getInstance()
-                .getRegion(p.getWorld().getName(), arenaName);
-
-        if(arena == null) {
-            p.sendMessage("Нет такой арены");
-            return;
+                .getRegion(worldName, arenaName);
+        if (arena == null) {
+            throw new Exception("Нет такой арены");
         }
         if (arena.isStarted()) {
-            p.sendMessage("Арена уже начата");
+            throw new Exception("Арена уже начата");
         } else {
-            arena.startArenaCountdown(p);
-            p.sendMessage("Вы начали арену");
+            arena.start();
         }
     }
-
     @Override
-    public void buttonset(Player p, BlockVector3 location) {
-        RewardedTimedMayhemArenaBuilder builder = repo.findByPlayer(p);
-        if(builder == null) {
-            p.sendMessage("У вас нет выбранного региона");
-            return;
+    public void buttonset(UUID playerUUID, BlockVector3 location) throws Exception {
+        RewardedTimedMayhemArenaBuilder builder = repo.findByPlayer(playerUUID);
+        if (builder == null) {
+            throw new Exception("У вас нет выбранного региона");
         }
+        if(builder.region == null)
+            throw new Exception("Перед установкой кнопки установите регион");
         if (!builder.region.contains(location)) {
-            p.sendMessage("Кнопка должна быть внутри региона");
-            return;
+            throw new Exception("Кнопка должна быть внутри региона");
         }
         builder.setActivator(location);
-        p.sendMessage("Вы установили кнопку");
     }
+
 }
