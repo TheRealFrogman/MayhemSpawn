@@ -6,8 +6,6 @@ MayhemSpawn плагин, который я сделал по просьбе с 
 
 Зависимости [WorldEdit, Vault, CommandAPI]
 
-**ТЕСТИРУЙТЕ НА ПУСТОМ СЕРВЕРЕ**
-
 ```
 /help mspawn
 
