@@ -9,6 +9,7 @@ import com.sk89q.worldedit.regions.Region;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.IntegerArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
+import org.bukkit.Bukkit;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -26,25 +27,27 @@ public class MayhemCommands {
                 .append("/mspawn create <arenaName>: Создает новую арену.\n")
                 .append("/mspawn set region: Устанавливает регион арены (требует выделения региона с помощью WorldEdit).\n")
                 .append("/mspawn set button: Устанавливает кнопку активации арены.\n")
-                .append("/mspawn select <arenaName>: Выбирает существующую арену для редактирования.\n")
                 .append("/mspawn set reward <amount>: Устанавливает награду за победу в арене.\n")
-                .append("/mspawn set timer <seconds>: Устанавливает время арены в секундах.")
+                .append("/mspawn set timer <seconds>: Устанавливает время арены в секундах.\n")
                 .append("/mspawn confirm: Подтверждает создание арены.\n")
+                .append("/mspawn select <arenaName>: Выбирает существующую арену для редактирования.")
                 .toString();
 
         String shortHelp = new StringBuilder()
                 .append("/mspawn create <arenaName> - Создать арену\n")
-                .append("/mspawn set region - Регион\n")
-                .append("/mspawn set button - Кнопка\n")
-                .append("/mspawn select <arenaName> - Выбрать арену\n")
-                .append("/mspawn set reward <amount> - Награда\n")
-                .append("/mspawn set timer <seconds> - Таймер\n")
+                .append("/mspawn set region - Установить регион\n")
+                .append("/mspawn set button - Установить кнопку\n")
+                .append("/mspawn set reward <amount> - Установить награду\n")
+                .append("/mspawn set timer <seconds> - Установить таймер\n")
                 .append("/mspawn confirm - Подтвердить\n")
+                .append("/mspawn select <arenaName> - Выбрать арену для редактирования")
                 .toString();
+
         return new CommandAPICommand("mspawn")
             .withPermission("mspawn.*")
             .withHelp(shortHelp,fullHelp)
             .withSubcommands(
+                helpCommand(),
                 createCommand(),
                 // startCommand(),
                 confirmCommand(),
@@ -201,6 +204,12 @@ public class MayhemCommands {
                     } catch (Exception e) {
                         player.sendMessage(e.getMessage());
                     }
+                });
+    }
+    private CommandAPICommand helpCommand(){
+        return new CommandAPICommand("help")
+                .executesPlayer((player, commandArguments) -> {
+                    Bukkit.getServer().dispatchCommand(player, "help mspawn");
                 });
     }
     //    private CommandAPICommand startCommand(){
