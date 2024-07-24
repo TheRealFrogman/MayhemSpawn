@@ -4,6 +4,8 @@
 
 MayhemSpawn плагин, который я сделал по просьбе с [рубаккита](https://rubukkit.org/threads/nebolshaja-mini-igra-na-celyj-spavn-mayhemspawn-1-8-1-20-x.191996/).
 
+**ТЕСТИРУЙТЕ НА ПУСТОМ СЕРВЕРЕ**
+
 ```
 /mspawn create <arenaName>: Создает новую арену.
 
