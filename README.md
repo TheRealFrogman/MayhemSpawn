@@ -9,6 +9,8 @@ MayhemSpawn плагин, который я сделал по просьбе с 
 ```
 /help mspawn
 
+/mspawn help
+
 /mspawn create <arenaName>: Создает новую арену.
 
 /mspawn set region: Устанавливает регион арены (требует выделения региона с помощью WorldEdit).
