@@ -2,7 +2,6 @@ package org.forg.mayhemspawn.MayhemArena.base;
 
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,7 +9,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public abstract class TimedMayhemArenaBase extends MayhemArena {
@@ -36,19 +34,6 @@ public abstract class TimedMayhemArenaBase extends MayhemArena {
     public void setCountdownDelay(int delay) {
         if (delay < 0) throw new IllegalArgumentException("can't be negative");
         this.countdownDelay = delay;
-    }
-
-    @Override
-    protected void beforeStart() throws Exception {
-        activePlayers = activeWorld.getPlayers().stream()
-                .filter(Objects::nonNull)
-                .filter(player -> {
-                    Location pl = player.getLocation();
-                    BlockVector3 vector = new BlockVector3(pl.getBlockX(),pl.getBlockY(),pl.getBlockZ());
-                    boolean playerInRegion = region.contains(vector);
-                    return playerInRegion;
-                })
-                .collect(Collectors.toSet());
     }
     @Override
     protected void afterStart() {

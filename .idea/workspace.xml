@@ -9,10 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b299749-4cd1-4bb6-915a-347d958a8d05" name="Changes" comment="">
+    <list default="true" id="7b299749-4cd1-4bb6-915a-347d958a8d05" name="Changes" comment="add /mspawn help">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/integration/MayhemCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/integration/MayhemCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/integration/MayhemCommands.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/forg/mayhemspawn/integration/MayhemCommands.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/base/MayhemArena.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/base/MayhemArena.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/base/TimedMayhemArenaBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/base/TimedMayhemArenaBase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,17 +44,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/dev/code/java/mc-plugins/servers/test-server/plugins",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.23793103"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/dev/code/java/mc-plugins/servers/test-server/plugins&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.23793103&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.forg.mayhemspawn" />
@@ -149,7 +149,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721857568903</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="add /mspawn help">
+      <option name="closed" value="true" />
+      <created>1721865415749</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1721865415749</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -168,7 +176,8 @@
     <MESSAGE value="final i guess" />
     <MESSAGE value="fix bugs, add bad code" />
     <MESSAGE value="Add help. Go for transaction pattern where i throw to terminate the call stack" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add help. Go for transaction pattern where i throw to terminate the call stack" />
+    <MESSAGE value="add /mspawn help" />
+    <option name="LAST_COMMIT_MESSAGE" value="add /mspawn help" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
