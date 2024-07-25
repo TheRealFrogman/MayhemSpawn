@@ -9,10 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b299749-4cd1-4bb6-915a-347d958a8d05" name="Changes" comment="add /mspawn help">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/base/MayhemArena.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/base/MayhemArena.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/base/TimedMayhemArenaBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/forg/mayhemspawn/MayhemArena/base/TimedMayhemArenaBase.java" afterDir="false" />
+    <list default="true" id="7b299749-4cd1-4bb6-915a-347d958a8d05" name="Changes" comment="move general logic to abstract class&#10;and get rid of unnecessary method">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +155,23 @@
       <option name="project" value="LOCAL" />
       <updated>1721865415749</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="move general logic to abstract class&#10;and get rid of unnecessary method">
+      <option name="closed" value="true" />
+      <created>1721867437884</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1721867437884</updated>
+    </task>
+    <task id="LOCAL-00011" summary="move general logic to abstract class&#10;and get rid of unnecessary method">
+      <option name="closed" value="true" />
+      <created>1721867452558</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1721867452558</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -177,7 +191,8 @@
     <MESSAGE value="fix bugs, add bad code" />
     <MESSAGE value="Add help. Go for transaction pattern where i throw to terminate the call stack" />
     <MESSAGE value="add /mspawn help" />
-    <option name="LAST_COMMIT_MESSAGE" value="add /mspawn help" />
+    <MESSAGE value="move general logic to abstract class&#10;and get rid of unnecessary method" />
+    <option name="LAST_COMMIT_MESSAGE" value="move general logic to abstract class&#10;and get rid of unnecessary method" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
