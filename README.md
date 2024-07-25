@@ -1,4 +1,4 @@
-# MayhemSpawn
+# MayhemSpawn 1.20.6
 
 **Автор идеи alex_nakonechniy09**
 
