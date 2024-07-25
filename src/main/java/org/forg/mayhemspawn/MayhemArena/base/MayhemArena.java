@@ -40,7 +40,7 @@ public abstract class MayhemArena {
     public boolean isFinished() {
         return !running;
     }
-    protected void startArena() throws Exception {
+    protected void definePlayersAndStartArena() throws Exception {
         activePlayers.clear();
 
         activePlayers = activeWorld.getPlayers().stream()

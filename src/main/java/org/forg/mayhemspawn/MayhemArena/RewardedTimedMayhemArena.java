@@ -52,7 +52,7 @@ public class RewardedTimedMayhemArena extends TimedMayhemArenaBase {
         }
     }
     public void start() throws Exception {
-        this.startArena();
+        this.definePlayersAndStartArena();
     }
 
 }
