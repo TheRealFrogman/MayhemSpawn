@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ public abstract class MayhemArena {
     public final CuboidRegion region;
     public final World activeWorld;
     public final String arenaName;
-    public BlockVector3 activatorLocation;
+    public List<BlockVector3> activatorLocations;
     protected Set<Player> activePlayers = new HashSet<>();
     protected int minPlayers;
     public MayhemArena(
@@ -25,14 +26,14 @@ public abstract class MayhemArena {
             World activeWorld,
             String arenaName,
             CuboidRegion region,
-            BlockVector3 activatorLocation,
+            List<BlockVector3> activatorLocations,
             int minPlayers
     ) {
         this.region = region;
         this.activeWorld = activeWorld;
         this.arenaName = arenaName;
         this.plugin = plugin;
-        this.activatorLocation = activatorLocation;
+        this.activatorLocations = activatorLocations;
         this.minPlayers = minPlayers;
     }
     private boolean running = false;

@@ -10,6 +10,8 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.forg.mayhemspawn.MayhemArena.base.TimedMayhemArenaBase;
 
+import java.util.List;
+
 public class RewardedTimedMayhemArena extends TimedMayhemArenaBase {
     private final Economy economy;
     public int reward;
@@ -21,12 +23,12 @@ public class RewardedTimedMayhemArena extends TimedMayhemArenaBase {
             World activeWorld,
             String arenaName,
             CuboidRegion region,
-            BlockVector3 activatorLocation,
+            List<BlockVector3> activatorLocations,
             int timerTicks,
             int reward,
             int minPlayers
     ) {
-        super(plugin, activeWorld, arenaName, region, activatorLocation, timerTicks, minPlayers);
+        super(plugin, activeWorld, arenaName, region, activatorLocations, timerTicks, minPlayers);
         this.reward = reward;
         RegisteredServiceProvider<Economy> economyProvider = plugin
                 .getServer()

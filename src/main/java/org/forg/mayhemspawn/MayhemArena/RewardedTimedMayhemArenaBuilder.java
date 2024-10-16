@@ -5,6 +5,8 @@ import com.sk89q.worldedit.regions.CuboidRegion;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class RewardedTimedMayhemArenaBuilder {
@@ -35,15 +37,13 @@ public class RewardedTimedMayhemArenaBuilder {
     public boolean isRewardSet(){
         return reward > 0;
     }
-    public BlockVector3 activatorLocation;
-    public RewardedTimedMayhemArenaBuilder setActivator(BlockVector3 activatorLocation) {
-        if(activatorLocation == null) throw new IllegalArgumentException("Can't be null");
-
-        this.activatorLocation = activatorLocation;
+    public List<BlockVector3> activatorLocations = new ArrayList<>();
+    public RewardedTimedMayhemArenaBuilder addActivator(BlockVector3 activatorLocation) {
+        this.activatorLocations.add(activatorLocation);
         return this;
     }
-    public boolean isActivatorSet(){
-        return activatorLocation != null;
+    public boolean hasAtleastOneActivator(){
+        return !activatorLocations.isEmpty();
     }
     public CuboidRegion region;
     public RewardedTimedMayhemArenaBuilder setRegion(CuboidRegion region) {
@@ -58,7 +58,7 @@ public class RewardedTimedMayhemArenaBuilder {
 
     public boolean canBuild() {
         return isTimerSet() &&
-                isActivatorSet() &&
+                hasAtleastOneActivator() &&
                 isRegionSet() &&
                 isRewardSet();
     }
@@ -71,11 +71,11 @@ public class RewardedTimedMayhemArenaBuilder {
                 activeWorld,
                 arenaName,
                 region,
-                activatorLocation,
+                activatorLocations,
                 timerTicks,
                 reward,
                 MIN_PLAYERS_DEFAULT
             );
-        else throw new IllegalStateException("Can't be null");
+        else throw new IllegalStateException("Canbuild can't be null");
     }
 }

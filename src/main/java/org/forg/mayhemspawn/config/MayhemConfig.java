@@ -3,6 +3,7 @@ package org.forg.mayhemspawn.config;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -11,7 +12,10 @@ import org.forg.mayhemspawn.MayhemArena.RewardedTimedMayhemArena;
 import org.forg.mayhemspawn.MayhemArena.RewardedTimedMayhemArenaBuilder;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MayhemConfig {
@@ -30,6 +34,7 @@ public class MayhemConfig {
     }
     private static final Map<String, Map<String, RewardedTimedMayhemArena>> worlds = new LinkedHashMap<>();
 
+    // надо реализовать считывание листов кнопок теперь
     public void load() {
         worlds.clear();
 
@@ -58,26 +63,29 @@ public class MayhemConfig {
                     );
 
                     int reward = regionSection.getInt("reward");
-                    ConfigurationSection activatorSection =
-                            regionSection.getConfigurationSection("activator");
-
-                    assert activatorSection != null;
-                    BlockVector3 activatorLocation = new BlockVector3(
-                            activatorSection.getInt("x"),
-                            activatorSection.getInt("y"),
-                            activatorSection.getInt("z")
-                    );
+//                    ConfigurationSection activatorSection = regionSection.getConfigurationSection("activator");
+//
+//
+//                    assert activatorSection != null;
+//                    BlockVector3 activatorLocation = new BlockVector3(
+//                            activatorSection.getInt("x"),
+//                            activatorSection.getInt("y"),
+//                            activatorSection.getInt("z")
+//                    );
+//
+                    List<List<Integer>> activatorsList = (List<List<Integer>>) regionSection.getList("activators");
 
                     World world = plugin.getServer().getWorld(worldName);
-                    regionMap.put(
-                            regionName,
-                            new RewardedTimedMayhemArenaBuilder(plugin,world,regionName)
-                                .setActivator(activatorLocation)
-                                .setRegion(region)
-                                .setRewardMoney(reward)
-                                .setTimerTicks(timer)
-                                .build()
-                    );
+                    var builder = new RewardedTimedMayhemArenaBuilder(plugin,world,regionName)
+                            .setRegion(region)
+                            .setRewardMoney(reward)
+                            .setTimerTicks(timer);
+
+                    for (List<Integer> ints : activatorsList) {
+                        builder.addActivator(new BlockVector3(ints.get(0), ints.get(1), ints.get(2)));
+                    }
+
+                    regionMap.put(regionName,builder.build());
                 } catch (NullPointerException ex) {
                     plugin.getLogger().severe(
                             "Конфиг для региона " + regionName + " не валидный");
@@ -114,8 +122,10 @@ public class MayhemConfig {
     public RewardedTimedMayhemArena getByActivatorLocation(@NotNull String worldName, @NotNull BlockVector3 location) {
         Map<String, RewardedTimedMayhemArena> worldRegions = worlds.getOrDefault(worldName, new LinkedHashMap<>());
         for (RewardedTimedMayhemArena arena: worldRegions.values()) {
-            if (location.equals(arena.activatorLocation)) {
-                return arena;
+            for (BlockVector3 activatorLocation: arena.activatorLocations) {
+                if (location.equals(activatorLocation)) {
+                    return arena;
+                }
             }
         }
         return null;
@@ -135,10 +145,14 @@ public class MayhemConfig {
 
                 regionSection.set("timer", arena.timerTicks);
                 regionSection.set("reward", arena.reward);
-                ConfigurationSection activatorSection = regionSection.createSection("activator");
-                activatorSection.set("x", arena.activatorLocation.x());
-                activatorSection.set("y", arena.activatorLocation.y());
-                activatorSection.set("z", arena.activatorLocation.z());
+
+                //я это изменил
+                List<Integer[]> activatorList = new ArrayList<>();
+                for (BlockVector3 location : arena.activatorLocations) {
+                    Integer[] arr = {location.x(),location.y(),location.z()};
+                    activatorList.add(arr);
+                }
+                regionSection.set("activators", activatorList);
 
                 BlockVector3 v1 = arena.region.getPos1();
                 BlockVector3 v2 = arena.region.getPos2();

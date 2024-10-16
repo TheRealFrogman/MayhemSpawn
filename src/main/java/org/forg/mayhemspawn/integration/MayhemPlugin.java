@@ -14,6 +14,8 @@ public final class MayhemPlugin extends JavaPlugin {
         MayhemConfig.init(this, getConfig());
         MayhemConfig.getInstance().load();
 
+        MayhemConfig.getInstance();
+
         MayhemActions actions = new MayhemActions(this);
         getServer().getPluginManager().registerEvents(new MayhemButtonListener(actions),this);
 

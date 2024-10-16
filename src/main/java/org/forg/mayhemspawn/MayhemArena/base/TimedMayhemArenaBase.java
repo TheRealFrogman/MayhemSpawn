@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,11 +24,11 @@ public abstract class TimedMayhemArenaBase extends MayhemArena {
             World activeWorld,
             String arenaName,
             CuboidRegion region,
-            BlockVector3 activatorLocation,
+            List<BlockVector3> activatorLocations,
             int timerTicks,
             int minPlayers
     ) {
-        super(plugin, activeWorld, arenaName, region, activatorLocation,minPlayers);
+        super(plugin, activeWorld, arenaName, region, activatorLocations,minPlayers);
         this.timerTicks = timerTicks;
         remainedTicks = timerTicks;
     }

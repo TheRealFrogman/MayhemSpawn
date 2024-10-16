@@ -1,17 +1,18 @@
 worlds:
   world:
-    spawn:
-      timer: 100
-      reward: 500
-      activator:
-        x: 1
-        y: 1
-        z: 1
+    default:
+      timer: 40
+      reward: 2
+      activators:
+        - - -5
+          - -58
+          - -21
       p1:
-        x: 0
-        y: 0
-        z: 0
+        x: -11
+        y: -59
+        z: -28
       p2:
+        y: -53
+        z: -12
         x: 2
-        y: 2
-        z: 2
+

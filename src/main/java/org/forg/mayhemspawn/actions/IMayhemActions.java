@@ -3,7 +3,6 @@ package org.forg.mayhemspawn.actions;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -16,5 +15,5 @@ public interface IMayhemActions {
     void setRegion(UUID playerUUID, CuboidRegion region) throws Exception;
     void startArenaByButton(String worldName, BlockVector3 activatorLocation) throws Exception;
     void startArenaByCommand(String worldName, String arenaName) throws Exception;
-    void buttonset(UUID playerUUID, BlockVector3 location) throws Exception;
+    void addButton(UUID playerUUID, BlockVector3 location) throws Exception;
 }

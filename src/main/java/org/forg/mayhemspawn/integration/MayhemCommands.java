@@ -14,8 +14,6 @@ import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Switch;
-import org.bukkit.command.CommandSender;
-import org.bukkit.help.HelpTopic;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.forg.mayhemspawn.actions.MayhemActions;
 
@@ -56,7 +54,7 @@ public class MayhemCommands {
             .withSubcommands(
                 setCommand()
                     .withSubcommands(
-                        setButtonCommand(),
+                        addButtonCommand(),
                         setRewardCommand(),
                         setRegionCommand(),
                         setTimerCommand()
@@ -132,7 +130,7 @@ public class MayhemCommands {
         return new CommandAPICommand("set")
                 .withPermission("mspawn.*");
     }
-    private CommandAPICommand setButtonCommand(){
+    private CommandAPICommand addButtonCommand(){
         return new CommandAPICommand("button")
                 .withPermission("mspawn.*")
                 .executesPlayer((player, commandArguments) -> {
@@ -145,14 +143,14 @@ public class MayhemCommands {
                     if(targetBlockData instanceof Switch sw1tch) {
                         if(Tag.BUTTONS.isTagged(sw1tch.getMaterial())){
                             try{
-                                actions.buttonset(
+                                actions.addButton(
                                         player.getUniqueId(),
                                         new BlockVector3(
                                                 targetBlock.getX(),
                                                 targetBlock.getY(),
                                                 targetBlock.getZ()
                                         ));
-                                player.sendMessage("Вы установили кнопку");
+                                player.sendMessage("Вы добавили кнопку");
                             } catch (Exception e) {
                                 player.sendMessage(e.getMessage());
                             }
